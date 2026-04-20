@@ -350,12 +350,17 @@
         .contact-link { color: var(--primary); transition: color 0.25s ease; }
         .contact-link:hover { color: var(--accent-soft); }
         .section-fade {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+            filter: blur(0);
+        }
+        .js-ready .section-fade {
             opacity: 0;
             transform: translateY(32px);
-            transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
             filter: blur(10px);
         }
-        .section-fade.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .js-ready .section-fade.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
         .float-card { animation: float 7s ease-in-out infinite; }
         .float-card.delay { animation-delay: -2.5s; }
         .marquee-line { display: none; }
@@ -811,6 +816,8 @@
     </div>
 
     <script>
+        document.documentElement.classList.add('js-ready');
+
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('main section');
         const mobileMenuBtn = document.getElementById('mobile-menu');
