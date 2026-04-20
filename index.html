@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Blessy | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #07111f;
+            --panel: rgba(12, 25, 44, 0.78);
+            --line: rgba(162, 196, 255, 0.16);
+            --text: #eff6ff;
+            --muted: #a8bad8;
+            --primary: #64f5d2;
+            --secondary: #7aa8ff;
+            --accent: #ff9b8f;
+            --accent-soft: #ffd76d;
+            --shadow: 0 24px 70px rgba(3, 10, 22, 0.45);
+            --hero-gradient: radial-gradient(circle at top left, rgba(122, 168, 255, 0.28), transparent 34%), radial-gradient(circle at 80% 20%, rgba(100, 245, 210, 0.18), transparent 28%), linear-gradient(160deg, #091325 0%, #0d1830 45%, #121d38 100%);
+        }
+        * { box-sizing: border-box; font-family: "Manrope", sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--text);
+            background: var(--bg);
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .brand-mark, .eyebrow, .pill, .nav-link { font-family: "Space Grotesk", sans-serif; }
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            width: 34rem;
+            height: 34rem;
+            border-radius: 999px;
+            pointer-events: none;
+            filter: blur(24px);
+            opacity: 0.28;
+            z-index: 0;
+        }
+        body::before {
+            top: -8rem;
+            right: -10rem;
+            background: radial-gradient(circle, rgba(122, 168, 255, 0.9), transparent 60%);
+            animation: drift 18s ease-in-out infinite;
+        }
+        body::after {
+            bottom: -10rem;
+            left: -10rem;
+            background: radial-gradient(circle, rgba(255, 155, 143, 0.72), transparent 62%);
+            animation: drift 20s ease-in-out infinite reverse;
+        }
+        .site-shell { position: relative; z-index: 1; }
+        .nav-wrap {
+            background: rgba(7, 17, 31, 0.7);
+            border-bottom: 1px solid rgba(162, 196, 255, 0.08);
+            backdrop-filter: blur(18px);
+        }
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(122, 168, 255, 0.18), rgba(100, 245, 210, 0.22));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            letter-spacing: 0.08em;
+            animation: brandPulse 4s ease-in-out infinite;
+        }
+        .nav-link {
+            position: relative;
+            color: rgba(239, 246, 255, 0.8);
+            transition: color 0.25s ease;
+        }
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -0.35rem;
+            width: 100%;
+            height: 2px;
+            transform: scaleX(0);
+            transition: transform 0.25s ease;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text); }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+        .hero-panel, .glass-card, .skill-card, .project-card, .certification-card, .contact-card, .stat-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+        .hero-panel {
+            background: var(--hero-gradient);
+            animation: panelBreath 12s ease-in-out infinite;
+        }
+        .hero-screen {
+            min-height: calc(100vh - 7rem);
+        }
+        .hero-title {
+            font-size: clamp(3rem, 4.8vw, 4.5rem);
+            line-height: 1.04;
+            letter-spacing: -0.04em;
+        }
+        .hero-copy {
+            font-size: 1.02rem;
+            line-height: 1.7;
+        }
+        .certification-card {
+            overflow: visible;
+        }
+        .certification-card h3 {
+            font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+        .certification-card p {
+            line-height: 1.55;
+        }
+        .hero-panel::before, .glass-card::before, .skill-card::before, .project-card::before, .certification-card::before, .contact-card::before, .stat-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 36%, transparent 60%, rgba(255,255,255,0.04));
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .hero-panel::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 42px 42px;
+            opacity: 0.2;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+            animation: gridShift 16s linear infinite;
+        }
+        .hero-panel > * {
+            position: relative;
+            z-index: 1;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.65rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+            letter-spacing: 0.04em;
+        }
+        .eyebrow::before {
+            content: "";
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), var(--accent-soft));
+            box-shadow: 0 0 0 0 rgba(100, 245, 210, 0.45);
+            animation: pulse 2s infinite;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 10%, var(--secondary) 48%, var(--primary) 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pill, .tag {
+            border-radius: 999px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .pill {
+            color: #d9e7ff;
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .pill:hover {
+            transform: translateY(-3px);
+            border-color: rgba(100, 245, 210, 0.45);
+            background: rgba(100, 245, 210, 0.08);
+        }
+        .primary-btn, .secondary-btn, .project-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            border-radius: 999px;
+            padding: 0.95rem 1.4rem;
+            font-weight: 700;
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .primary-btn::before, .secondary-btn::before, .project-link::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.22) 45%, transparent 100%);
+            transform: translateX(-140%);
+            transition: transform 0.7s ease;
+        }
+        .primary-btn {
+            color: #08111f;
+            background: linear-gradient(135deg, var(--primary), #bfffe4);
+            box-shadow: 0 16px 34px rgba(100, 245, 210, 0.24);
+        }
+        .secondary-btn, .project-link.secondary {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .project-link.primary {
+            color: #08111f;
+            background: linear-gradient(135deg, var(--accent-soft), #fff0b3);
+        }
+        .primary-btn:hover, .secondary-btn:hover, .project-link:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24); }
+        .primary-btn:hover::before, .secondary-btn:hover::before, .project-link:hover::before { transform: translateX(140%); }
+        .section-title { font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1.05; margin-bottom: 1rem; }
+        .section-copy { color: var(--muted); max-width: 40rem; }
+        .skill-card, .project-card, .certification-card, .contact-card, .stat-card { transition: transform 0.28s ease, border-color 0.28s ease; }
+        .skill-card:hover, .project-card:hover, .certification-card:hover, .contact-card:hover, .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(100, 245, 210, 0.32);
+        }
+        .glass-card::after, .skill-card::after, .project-card::after, .certification-card::after, .contact-card::after, .stat-card::after {
+            content: "";
+            position: absolute;
+            inset: -30%;
+            background: radial-gradient(circle, rgba(100,245,210,0.14), transparent 52%);
+            opacity: 0;
+            transform: translate3d(-10%, 8%, 0);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+        }
+        .glass-card:hover::after, .skill-card:hover::after, .project-card:hover::after, .certification-card:hover::after, .contact-card:hover::after, .stat-card:hover::after {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+        .skill-icon, .contact-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1.15rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(122, 168, 255, 0.22), rgba(255, 155, 143, 0.18));
+            color: var(--accent-soft);
+            font-size: 1.5rem;
+            animation: iconBob 6s ease-in-out infinite;
+        }
+        .project-visual {
+            position: relative;
+            min-height: 17rem;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .project-visual::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25), transparent 26%), linear-gradient(135deg, rgba(122, 168, 255, 0.6), rgba(100, 245, 210, 0.15), rgba(255, 155, 143, 0.42));
+            animation: shimmer 11s linear infinite;
+        }
+        .project-shot {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            min-height: 17rem;
+            object-fit: cover;
+            object-position: top center;
+            opacity: 0.95;
+        }
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.4rem;
+            background: linear-gradient(180deg, rgba(8, 17, 31, 0.05), rgba(8, 17, 31, 0.24) 40%, rgba(8, 17, 31, 0.92));
+        }
+        .project-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            width: fit-content;
+            padding: 0.42rem 0.8rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #eef5ff;
+        }
+        .project-copy {
+            color: #c8d7ef;
+            line-height: 1.8;
+        }
+        .project-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .project-card .tag {
+            background: rgba(122, 168, 255, 0.08);
+            border-color: rgba(122, 168, 255, 0.18);
+        }
+        .skills-board {
+            display: grid;
+            gap: 1.1rem;
+        }
+        .skill-row {
+            display: grid;
+            gap: 0.9rem;
+            align-items: start;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .skill-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+        .skill-heading {
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c9daf7;
+        }
+        .skill-line {
+            color: #e7f0ff;
+            line-height: 1.8;
+        }
+        .tag { padding: 0.45rem 0.8rem; font-size: 0.82rem; color: #f2f7ff; }
+        .contact-link { color: var(--primary); transition: color 0.25s ease; }
+        .contact-link:hover { color: var(--accent-soft); }
+        .section-fade {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+            filter: blur(10px);
+        }
+        .section-fade.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .float-card { animation: float 7s ease-in-out infinite; }
+        .float-card.delay { animation-delay: -2.5s; }
+        .marquee-line { display: none; }
+        .mobile-sheet { display: none; }
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(6, 13, 24, 0.8);
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(100, 245, 210, 0.4); }
+            70% { box-shadow: 0 0 0 16px rgba(100, 245, 210, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(100, 245, 210, 0); }
+        }
+        @keyframes drift {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(2rem, 1rem, 0) scale(1.08); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes iconBob {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(4deg); }
+        }
+        @keyframes shimmer {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(6deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes panelBreath {
+            0%, 100% { box-shadow: 0 24px 70px rgba(3, 10, 22, 0.45); }
+            50% { box-shadow: 0 30px 90px rgba(10, 32, 58, 0.6); }
+        }
+        @keyframes gridShift {
+            0% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(-12px, 10px, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+        }
+        @keyframes brandPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(122,168,255,0.12); }
+            50% { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(122,168,255,0); }
+        }
+        @media (max-width: 768px) {
+            .mobile-sheet.active { display: flex; }
+            .hero-panel { border-radius: 2rem; }
+            .hero-screen {
+                min-height: auto;
+            }
+            .hero-title {
+                font-size: 2.7rem;
+                line-height: 1.08;
+            }
+            .project-shot {
+                min-height: 13rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .skill-row {
+                grid-template-columns: 12rem 1fr;
+            }
+        }
+        @media (min-width: 1024px) {
+            .hero-screen {
+                min-height: calc(100vh - 6.5rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-shell">
+        <nav class="nav-wrap fixed inset-x-0 top-0 z-50">
+            <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+                <a href="#home" class="flex items-center gap-3">
+                    <span class="brand-mark">AB</span>
+                    <div>
+                        <p class="m-0 text-lg font-bold text-white">Angel Blessy</p>
+                    </div>
+                </a>
+                <div class="hidden items-center gap-8 md:flex">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#certifications" class="nav-link">Certifications</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <button id="mobile-menu" class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white md:hidden" aria-label="Open menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div id="mobile-sheet" class="mobile-sheet flex-col gap-4 border-t border-white/10 bg-slate-950/95 px-6 py-5 md:hidden">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#certifications" class="nav-link">Certifications</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </nav>
+        <main>
+            <section id="home" class="px-4 pb-8 pt-24 md:px-8 md:pb-10 md:pt-24">
+                <div class="hero-panel hero-screen mx-auto grid max-w-7xl items-center gap-6 rounded-[2.5rem] px-6 py-7 md:grid-cols-[1.15fr_0.85fr] md:px-8 md:py-8">
+                    <div class="relative z-10 section-fade">
+                        <span class="eyebrow mb-5">Full Stack Developer / Analytics</span>
+                        <h1 class="hero-title mb-4 font-bold">
+                            Full Stack <span class="gradient-text">Developer</span> with interest in Analytics and impact-driven work.
+                        </h1>
+                        <p class="hero-copy mb-5 max-w-2xl text-slate-300">
+                            I am open to work and interested in building practical products across full-stack development, analytics, NGO-focused initiatives, and collaborative teams that value responsibility and clear execution.
+                        </p>
+                        <div class="mb-6 flex flex-wrap gap-3">
+                            <span class="pill px-5 py-3 text-sm">Full Stack Development</span>
+                            <span class="pill px-5 py-3 text-sm">Data Analytics</span>
+                            <span class="pill px-5 py-3 text-sm">Open To Work</span>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="scrollToSection('projects')" class="primary-btn">View My Work <i class="fas fa-arrow-right"></i></button>
+                            <button onclick="scrollToSection('contact')" class="secondary-btn">Start a Conversation</button>
+                        </div>
+                    </div>
+                    <div class="relative grid gap-4 section-fade md:justify-self-end">
+                        <div class="float-card glass-card rounded-[2rem] p-5 md:p-6">
+                            <p class="mb-3 text-sm uppercase tracking-[0.2em] text-slate-300">Profile Focus</p>
+                            <div class="mb-4 flex items-end justify-between gap-4">
+                                <h2 class="text-2xl font-bold md:text-[2rem]">Technology with purpose</h2>
+                                <span class="rounded-full bg-emerald-300/15 px-3 py-1 text-xs font-bold text-emerald-200">Available</span>
+                            </div>
+                            <p class="text-slate-300">Focused on full-stack development, analytics, meaningful projects, and dependable delivery within collaborative teams.</p>
+                        </div>
+                        <div class="float-card delay grid gap-5 md:grid-cols-2">
+                            <div class="stat-card rounded-[1.7rem] p-5">
+                                <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Interests</p>
+                                <h3 class="mt-3 text-3xl font-bold text-white md:text-[2.4rem]">FSD + Analytics</h3>
+                                <p class="mt-2 text-slate-300">Building products supported by data and business understanding.</p>
+                            </div>
+                            <div class="stat-card rounded-[1.7rem] p-5">
+                                <p class="text-sm uppercase tracking-[0.2em] text-slate-300">Work Style</p>
+                                <h3 class="mt-3 text-2xl font-bold text-white">Punctual and collaborative</h3>
+                                <p class="mt-2 text-slate-300">Comfortable in teams, reliable with timelines, and open to learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="marquee-line">
+                        <span>Full Stack Developer  •  Analytics  •  Full Stack Developer  •  Analytics  •  Full Stack Developer  •  Analytics</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="px-4 py-16 md:px-8 md:py-24">
+                <div class="mx-auto max-w-7xl">
+                    <div class="mb-12 section-fade">
+                        <p class="eyebrow mb-4">About Me</p>
+                        <h2 class="section-title">A designer-minded developer who cares about feel as much as function.</h2>
+                        <p class="section-copy text-lg leading-8">
+                            I work across frontend development, UI/UX design, and content strategy to create digital products that look intentional and perform cleanly. My style leans toward expressive visuals, structured layouts, and interfaces that stay easy to navigate.
+                        </p>
+                    </div>
+                    <div class="grid items-start gap-8 md:grid-cols-[0.78fr_1.22fr]">
+                        <div class="section-fade md:sticky md:top-28">
+                            <div class="glass-card rounded-[2rem] p-4">
+                                <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
+                                    <img src="Photo.JPG" alt="Portrait of Angel Blessy" class="max-h-[30rem] w-full object-cover object-top">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-fade grid content-start gap-6">
+                            <div class="glass-card rounded-[2rem] p-7">
+                                <p class="text-lg leading-8 text-slate-300">
+                                    Hello, I am Angel Blessy. I am interested in full-stack development, data and business analytics, and building digital products that create clear value for users and organizations. I enjoy combining technical execution with thoughtful design so the final outcome is both functional and easy to use.
+                                </p>
+                                <p class="mt-5 text-lg leading-8 text-slate-300">
+                                    I am especially drawn to meaningful work, including NGO-focused and impact-driven projects. I am open to work, committed to punctual delivery, comfortable collaborating as part of a team, and always willing to learn, adapt, and contribute wherever needed.
+                                </p>
+                            </div>
+                            <div class="grid gap-5 md:grid-cols-3">
+                                <div class="stat-card rounded-[1.6rem] p-5">
+                                    <p class="text-sm uppercase tracking-[0.18em] text-slate-300">Core Strength</p>
+                                    <h3 class="mt-3 text-2xl font-bold">Full-Stack and Analytics</h3>
+                                    <p class="mt-2 text-slate-300">Interested in product building, data insights, and business-oriented problem solving.</p>
+                                </div>
+                                <div class="stat-card rounded-[1.6rem] p-5">
+                                    <p class="text-sm uppercase tracking-[0.18em] text-slate-300">Work Preference</p>
+                                    <h3 class="mt-3 text-2xl font-bold">Impact and NGOs</h3>
+                                    <p class="mt-2 text-slate-300">Motivated by work that supports communities, people, and meaningful outcomes.</p>
+                                </div>
+                                <div class="stat-card rounded-[1.6rem] p-5">
+                                    <p class="text-sm uppercase tracking-[0.18em] text-slate-300">Work Style</p>
+                                    <h3 class="mt-3 text-2xl font-bold">Reliable Team Member</h3>
+                                    <p class="mt-2 text-slate-300">Punctual, collaborative, open to work, and focused on delivering responsibly.</p>
+                                </div>
+                            </div>
+                            <div class="pt-1">
+                                <a href="_ANGEL_BLESSY_RESUME.pdf" target="_blank" rel="noopener noreferrer" class="primary-btn">View Resume <i class="fas fa-file-arrow-down"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="certifications" class="px-4 py-16 md:px-8 md:py-24">
+                <div class="mx-auto max-w-7xl">
+                    <div class="mb-12 section-fade">
+                        <p class="eyebrow mb-4">Certifications</p>
+                        <h2 class="section-title">Credentials that support the technical and design side of my work.</h2>
+                    </div>
+                    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Agile Scrum in Practice</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2026</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Big Data</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2026</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Cloud Technologies</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2026</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Data Science</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2026</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Excel</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2026</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Software Engineering and Agile Software Development</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2026</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Advanced SQL</h3>
+                            <p class="mt-3 text-slate-300">Great Learning</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2024</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Business Intelligence with Tableau</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2024</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Get Started with Figma</h3>
+                            <p class="mt-3 text-slate-300">Coursera</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2024</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Data Manipulation with pandas</h3>
+                            <p class="mt-3 text-slate-300">Datacamp</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2025</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Hands-on Supervised Machine Learning with Python</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2024</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Intermediate OOP in Python</h3>
+                            <p class="mt-3 text-slate-300">Datacamp</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2025</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Intermediate Python</h3>
+                            <p class="mt-3 text-slate-300">Datacamp</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2025</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">Python for Beginners: Data Structures</h3>
+                            <p class="mt-3 text-slate-300">Coursera</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2025</p>
+                        </article>
+                        <article class="certification-card section-fade flex h-full flex-col rounded-[1.8rem] p-6">
+                            <h3 class="text-2xl font-bold">UX Design by Example</h3>
+                            <p class="mt-3 text-slate-300">Infosys</p>
+                            <p class="mt-1 text-sm text-slate-400">Issued 2023</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="px-4 py-16 md:px-8 md:py-24">
+                <div class="mx-auto max-w-7xl">
+                    <div class="mb-12 section-fade">
+                        <p class="eyebrow mb-4">Skills</p>
+                        <h2 class="section-title">A toolkit shaped for building polished web experiences.</h2>
+                        <p class="section-copy text-lg leading-8">The stack covers interface development, design tooling, backend support, and cloud workflows used to ship complete products.</p>
+                    </div>
+                    <div class="glass-card section-fade rounded-[2rem] p-6 md:p-8">
+                        <div class="skills-board">
+                            <div class="skill-row">
+                                <div class="skill-heading">Frontend</div>
+                                <div class="skill-line">React, TypeScript, JavaScript, HTML, CSS, responsive UI, component-based development</div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-heading">Full Stack</div>
+                                <div class="skill-line">Node.js, Express, Firebase, MongoDB, SQL, Supabase, API integration</div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-heading">Data and Business</div>
+                                <div class="skill-line">Python, SQL, Data analysis, Business insights, dashboards, Power BI, WEKA, problem solving</div>
+                            </div>
+                            <div class="skill-row">
+                                <div class="skill-heading">Auth and Tools</div>
+                                <div class="skill-line">Clerk authentication, Git, AWS, Figma, wireframing, UI/UX thinking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="px-4 py-16 md:px-8 md:py-24">
+                <div class="mx-auto max-w-7xl">
+                    <div class="mb-12 section-fade">
+                        <p class="eyebrow mb-4">Projects</p>
+                        <h2 class="section-title">Selected projects with stronger visuals, cleaner hierarchy, and real previews.</h2>
+                        <p class="section-copy text-lg leading-8">This section now uses your uploaded project artwork directly, with a more balanced card layout and tighter copy so each project feels intentional.</p>
+                    </div>
+                    <div class="grid gap-8 lg:grid-cols-3">
+                        <article class="project-card section-fade rounded-[2rem]">
+                            <div class="project-visual">
+                                <img src="Pawtner.png" alt="Preview of Pawtner Hope website" class="project-shot">
+                                <div class="project-overlay">
+                                    <span class="project-meta">Pet Care Platform</span>
+                                    <h3 class="mt-3 text-3xl font-bold text-white">Pawtner Hope</h3>
+                                </div>
+                            </div>
+                            <div class="p-7">
+                                <p class="project-copy mb-5">A warm adoption-focused experience with a softer visual direction, clear messaging, and a more inviting path for users looking to support or adopt pets.</p>
+                                <div class="project-stack mb-6">
+                                    <span class="tag">React</span>
+                                    <span class="tag">Responsive UI</span>
+                                    <span class="tag">Landing Page</span>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <a href="https://pawtnerhope.angelblessy.com" target="_blank" rel="noopener noreferrer" class="project-link primary">Live Demo <i class="fas fa-arrow-up-right-from-square"></i></a>
+                                    <a href="https://github.com/angelblessy" target="_blank" rel="noopener noreferrer" class="project-link secondary">GitHub <i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card section-fade rounded-[2rem]">
+                            <div class="project-visual">
+                                <img src="Unieasy.png" alt="Preview of UniEasy website" class="project-shot">
+                                <div class="project-overlay">
+                                    <span class="project-meta">Student Experience</span>
+                                    <h3 class="mt-3 text-3xl font-bold text-white">UniEasy</h3>
+                                </div>
+                            </div>
+                            <div class="p-7">
+                                <p class="project-copy mb-5">A student-focused campus guide built to simplify discovery of places, study zones, accommodation, and nearby essentials through a more structured interface.</p>
+                                <div class="project-stack mb-6">
+                                    <span class="tag">React</span>
+                                    <span class="tag">UI Design</span>
+                                    <span class="tag">Web App</span>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <a href="https://unieasy.angelblessy.com" target="_blank" rel="noopener noreferrer" class="project-link primary">Live Demo <i class="fas fa-arrow-up-right-from-square"></i></a>
+                                    <a href="https://github.com/angelblessy" target="_blank" rel="noopener noreferrer" class="project-link secondary">GitHub <i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card section-fade rounded-[2rem]">
+                            <div class="project-visual">
+                                <img src="Healthgate.png" alt="Preview of HealthGate website" class="project-shot">
+                                <div class="project-overlay">
+                                    <span class="project-meta">Healthcare Resource Hub</span>
+                                    <h3 class="mt-3 text-3xl font-bold text-white">HealthGate</h3>
+                                </div>
+                            </div>
+                            <div class="p-7">
+                                <p class="project-copy mb-5">A healthcare access platform designed as a single place to browse hospitals, pharmacies, pathology resources, and issue-based care information in one interface.</p>
+                                <div class="project-stack mb-6">
+                                    <span class="tag">React</span>
+                                    <span class="tag">React Router</span>
+                                    <span class="tag">Axios</span>
+                                    <span class="tag">AOS</span>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <a href="https://hgate.vercel.app/home" target="_blank" rel="noopener noreferrer" class="project-link primary">Live Demo <i class="fas fa-arrow-up-right-from-square"></i></a>
+                                    <a href="https://github.com/angelblessy" target="_blank" rel="noopener noreferrer" class="project-link secondary">GitHub <i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card section-fade rounded-[2rem]">
+                            <div class="project-visual">
+                                <img src="proj.png" alt="Preview of personal portfolio website" class="project-shot">
+                                <div class="project-overlay">
+                                    <span class="project-meta">Personal Portfolio</span>
+                                    <h3 class="mt-3 text-3xl font-bold text-white">Portfolio Website</h3>
+                                </div>
+                            </div>
+                            <div class="p-7">
+                                <p class="project-copy mb-5">A personal portfolio built to present my profile, projects, certifications, and contact details with a stronger visual identity and smoother interaction flow.</p>
+                                <div class="project-stack mb-6">
+                                    <span class="tag">HTML</span>
+                                    <span class="tag">CSS</span>
+                                    <span class="tag">JavaScript</span>
+                                </div>
+                                <div class="flex flex-wrap gap-3">
+                                    <span class="project-link primary">You are here!</span>
+                                    <a href="https://github.com/angelblessy" target="_blank" rel="noopener noreferrer" class="project-link secondary">GitHub <i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <section id="contact" class="px-4 py-16 md:px-8 md:py-24">
+                <div class="mx-auto max-w-7xl">
+                    <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+                        <div class="section-fade">
+                            <p class="eyebrow mb-4">Contact</p>
+                            <h2 class="section-title">Open to collaborations, product work, and creative frontend roles.</h2>
+                            <p class="section-copy text-lg leading-8">If you want a portfolio site, a landing page redesign, or product UI that feels sharper and more premium, I'm available to talk.</p>
+                        </div>
+                        <div class="contact-card section-fade rounded-[2rem] p-7">
+                            <div class="grid gap-6 md:grid-cols-2">
+                                <div class="glass-card rounded-[1.6rem] p-5">
+                                    <span class="contact-icon"><i class="fas fa-location-dot"></i></span>
+                                    <h3 class="mt-4 text-xl font-bold">Location</h3>
+                                    <p class="mt-2 text-slate-300">Bangalore, India</p>
+                                </div>
+                                <div class="glass-card rounded-[1.6rem] p-5">
+                                    <span class="contact-icon"><i class="fab fa-linkedin-in"></i></span>
+                                    <h3 class="mt-4 text-xl font-bold">LinkedIn</h3>
+                                    <a href="https://www.linkedin.com/in/angelblessy" target="_blank" rel="noopener noreferrer" class="contact-link mt-2 inline-flex">linkedin.com/in/angelblessy</a>
+                                </div>
+                                <div class="glass-card rounded-[1.6rem] p-5">
+                                    <span class="contact-icon"><i class="fab fa-github"></i></span>
+                                    <h3 class="mt-4 text-xl font-bold">GitHub</h3>
+                                    <a href="https://github.com/angelblessy" target="_blank" rel="noopener noreferrer" class="contact-link mt-2 inline-flex">github.com/angelblessy</a>
+                                </div>
+                                <div class="glass-card rounded-[1.6rem] p-5">
+                                    <span class="contact-icon"><i class="fab fa-instagram"></i></span>
+                                    <h3 class="mt-4 text-xl font-bold">Instagram</h3>
+                                    <a href="https://www.instagram.com/angel__blessy" target="_blank" rel="noopener noreferrer" class="contact-link mt-2 inline-flex">instagram.com/angel__blessy</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="px-6 py-8 text-center">
+            <p class="text-base font-semibold text-slate-400">&copy; 2025 Angel Blessy</p>
+        </footer>
+    </div>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const mobileSheet = document.getElementById('mobile-sheet');
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        navLinks.forEach((link) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute('href').replace('#', '');
+                scrollToSection(targetId);
+                mobileSheet.classList.remove('active');
+            });
+        });
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileSheet.classList.toggle('active');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.14,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.section-fade').forEach((element) => observer.observe(element));
+
+        function updateActiveLink() {
+            let current = 'home';
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop - 180 && window.scrollY < sectionTop + sectionHeight - 120) {
+                    current = section.id;
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        window.addEventListener('load', updateActiveLink);
+    </script>
+</body>
+</html>
